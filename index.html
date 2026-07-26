@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1e3a34">
+  <title>Apartmán Kamzík 26 a Kamzík 64 · Donovaly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pine:#1e3a34;
+      --pine-2:#31574e;
+      --paper:#faf7f1;
+      --card:#ffffff;
+      --ink:#22302c;
+      --muted:#6b7a74;
+      --gold:#b98a3c;
+      --gold-soft:#f3e8d3;
+      --line:#e7e0d3;
+      --danger:#9a3e34;
+      --danger-soft:#fff0ed;
+      --success:#386b56;
+      --blue-soft:#eef5f4;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+      font-family:'Manrope',system-ui,sans-serif;
+      background:var(--paper);
+      color:var(--ink);
+      line-height:1.55;
+      padding-bottom:96px
+    }
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .wrap{max-width:520px;margin:0 auto;padding:0 18px}
+
+    header{
+      position:relative;
+      overflow:visible;
+      z-index:20;
+      color:#f7f3ea;
+      padding:24px 0 38px;
+      border-radius:0 0 30px 30px;
+      background:
+        radial-gradient(circle at 84% 16%,rgba(255,223,151,.25) 0 8%,transparent 9%),
+        linear-gradient(145deg,var(--pine-2),var(--pine));
+      box-shadow:0 10px 30px rgba(30,58,52,.15)
+    }
+    header:after{
+      content:"🏔️";
+      position:absolute;
+      right:22px;
+      bottom:7px;
+      font-size:70px;
+      opacity:.10;
+      pointer-events:none
+    }
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}
+    .brand{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;opacity:.82;min-width:0}
+    h1{font-family:'Fraunces',serif;font-size:clamp(27px,7.5vw,36px);line-height:1.1;letter-spacing:-.02em;max-width:390px}
+    .subtitle{margin-top:7px;font-size:14px;opacity:.88;max-width:390px}
+    .address{
+      display:flex;align-items:center;gap:9px;margin-top:15px;
+      color:#fff;text-decoration:none;font-size:14px;font-weight:700;
+      padding:11px 13px;border-radius:13px;
+      background:rgba(255,255,255,.11);
+      border:1px solid rgba(255,255,255,.18)
+    }
+    .address span:nth-child(2){flex:1}
+
+    .lang{position:relative;flex-shrink:0}
+    .lang-toggle{
+      display:flex;align-items:center;gap:7px;
+      border:1px solid rgba(255,255,255,.24);
+      background:rgba(255,255,255,.13);
+      color:#fff;font-weight:800;font-size:12px;
+      padding:8px 11px;border-radius:999px
+    }
+    .lang-menu{
+      position:absolute;right:0;top:calc(100% + 9px);z-index:200;
+      width:210px;max-height:min(70vh,420px);overflow:auto;
+      background:#fff;color:var(--ink);
+      border:1px solid var(--line);border-radius:16px;
+      box-shadow:0 18px 42px rgba(10,25,20,.24);
+      padding:7px;display:none
+    }
+    .lang.open .lang-menu{display:block}
+    .lang-option{
+      width:100%;display:flex;align-items:center;gap:10px;
+      border:0;background:transparent;color:var(--ink);
+      font-weight:700;font-size:14px;padding:10px 11px;
+      border-radius:11px;text-align:left
+    }
+    .lang-option.on{background:var(--pine);color:#fff}
+    .lang-option .flag{font-size:19px;width:24px;text-align:center}
+    .lang-option .check{margin-left:auto;opacity:0}
+    .lang-option.on .check{opacity:1}
+
+    .arrival-card{
+      margin-top:-17px;position:relative;z-index:5;
+      background:rgba(255,255,255,.98);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 8px 24px rgba(30,58,52,.10);
+      padding:17px
+    }
+    .times{display:flex;gap:10px}
+    .time{
+      flex:1;background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:14px;padding:13px 9px;text-align:center
+    }
+    .t-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .t-val{font-family:'Fraunces';font-size:24px;font-weight:700;line-height:1.25}
+    .t-note{font-size:12px;color:var(--muted)}
+
+    section{margin-top:28px}
+    h2{font-family:'Fraunces';font-size:23px;margin-bottom:12px}
+    .info-card,.invoice-card{
+      background:var(--card);border:1px solid var(--line);
+      border-radius:var(--radius);margin-bottom:13px
+    }
+    .info-card{padding:17px}
+    .card-head{display:flex;align-items:flex-start;gap:12px}
+    .icon{
+      flex:0 0 40px;height:40px;border-radius:12px;
+      background:var(--gold-soft);
+      display:flex;align-items:center;justify-content:center;font-size:20px
+    }
+    .info-card h3{font-size:17px;margin-bottom:4px}
+    .info-card p{font-size:15px;color:var(--muted)}
+    .info-card strong{color:var(--ink)}
+    .highlight{
+      margin-top:13px;background:var(--blue-soft);
+      border:1px solid #d9e6e3;
+      border-radius:14px;padding:13px 14px;
+      font-size:14px;color:#36534d
+    }
+    .warning{
+      margin-top:13px;background:var(--danger-soft);
+      border:1px solid #f1c4bd;border-left:5px solid var(--danger);
+      border-radius:15px;padding:14px
+    }
+    .warning strong{color:var(--danger)}
+    .mini-list{display:grid;gap:9px;margin-top:13px}
+    .mini-row{
+      display:flex;align-items:flex-start;gap:10px;
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:13px;padding:12px 13px
+    }
+    .mini-row .bullet{flex:0 0 27px;height:27px;border-radius:9px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center}
+    .mini-row p{font-size:14px}
+
+    .wifi-box{margin-top:13px;display:grid;gap:9px}
+    .wifi-row{
+      background:var(--paper);border:1px solid var(--line);
+      border-radius:13px;padding:12px 13px
+    }
+    .wifi-row small{
+      display:block;color:var(--muted);font-weight:800;
+      text-transform:uppercase;letter-spacing:.08em;font-size:10px
+    }
+    .wifi-row strong{display:block;margin-top:3px;font-size:17px;overflow-wrap:anywhere}
+
+    .contact-card{
+      background:#fff;border:1px solid var(--line);border-radius:15px;
+      padding:13px;margin-bottom:10px
+    }
+    .contact-name{font-weight:800;font-size:15px}
+    .contact-note{font-size:12px;color:var(--muted);margin-top:2px}
+    .contact-line{display:flex;align-items:center;gap:10px;margin-top:10px}
+    .phone{flex:1;font-weight:800;font-size:16px}
+    .contact-line a{
+      color:var(--pine);background:var(--gold-soft);
+      text-decoration:none;font-weight:800;border-radius:10px;
+      padding:9px 10px;font-size:13px
+    }
+
+    details summary{cursor:pointer;list-style:none}
+    details summary::-webkit-details-marker{display:none}
+    .invoice-card{overflow:hidden}
+    .invoice-card summary{
+      display:flex;align-items:center;gap:10px;
+      padding:17px;font-weight:800
+    }
+    .summary-text{flex:1}
+    .summary-text small{display:block;color:var(--muted);font-weight:600;margin-top:2px}
+    .chevron{font-size:12px;transition:.2s}
+    details[open] .chevron{transform:rotate(180deg)}
+    .invoice-body{border-top:1px solid var(--line);padding:16px}
+    .invoice-body>p{font-size:14px;color:var(--muted);margin-bottom:14px}
+    .form-grid{display:grid;gap:11px}
+    .field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px}
+    .field input,.field textarea{
+      width:100%;border:1px solid var(--line);background:#fff;
+      border-radius:11px;padding:12px;color:var(--ink);outline:none
+    }
+    .field textarea{min-height:96px;resize:vertical}
+    .send-form{
+      width:100%;margin-top:14px;border:0;border-radius:11px;
+      padding:13px 12px;font-weight:800;background:var(--pine);color:#fff
+    }
+    .form-status{min-height:21px;margin-top:9px;font-size:13px;font-weight:700;text-align:center}
+    .success{color:var(--success)}.error{color:var(--danger)}
+
+
+    .accordion{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      margin-bottom:12px;
+      overflow:hidden;
+      box-shadow:0 3px 12px rgba(30,58,52,.035)
+    }
+    .accordion summary{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:16px 17px;
+      font-weight:800;
+      cursor:pointer;
+      list-style:none;
+      user-select:none
+    }
+    .accordion summary::-webkit-details-marker{display:none}
+    .accordion .summary-main{flex:1;min-width:0}
+    .accordion .summary-main span{display:block;font-size:16px}
+    .accordion .summary-main small{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:600;
+      margin-top:2px
+    }
+    .accordion .arrow{
+      flex:0 0 30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--gold-soft);
+      color:var(--gold);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      transition:transform .22s ease
+    }
+    .accordion[open] .arrow{transform:rotate(180deg)}
+    .accordion-body{
+      border-top:1px solid var(--line);
+      padding:15px 17px 17px
+    }
+    .accordion-body>p{font-size:15px;color:var(--muted)}
+    .accordion-body .highlight:first-child,
+    .accordion-body .warning:first-child,
+    .accordion-body .mini-list:first-child,
+    .accordion-body .wifi-box:first-child{margin-top:0}
+
+    footer{margin:30px 0 10px;text-align:center;font-size:13px;color:var(--muted)}
+
+    .sticky-contact{
+      position:fixed;left:0;right:0;bottom:0;z-index:30;
+      background:rgba(250,247,241,.94);backdrop-filter:blur(9px);
+      border-top:1px solid var(--line);
+      padding:11px 18px calc(11px + env(safe-area-inset-bottom))
+    }
+    .sticky-contact button{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      width:100%;max-width:520px;margin:0 auto;
+      background:var(--gold);color:#fff;border:0;
+      font-weight:800;padding:14px;border-radius:12px
+    }
+    .contact-overlay{
+      position:fixed;inset:0;background:rgba(17,28,25,.48);
+      z-index:300;display:none;align-items:flex-end;
+      justify-content:center;padding:18px
+    }
+    .contact-overlay.open{display:flex}
+    .contact-sheet{
+      width:100%;max-width:520px;background:var(--paper);
+      border-radius:22px;padding:18px;
+      box-shadow:0 18px 50px rgba(0,0,0,.28)
+    }
+    .sheet-head{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+    .sheet-head h2{margin:0;flex:1}
+    .sheet-close{width:36px;height:36px;border:1px solid var(--line);background:#fff;border-radius:50%}
+    .owner-list{display:grid;gap:10px}
+    .owner-row{
+      background:#fff;border:1px solid var(--line);
+      border-radius:15px;padding:13px;
+      display:flex;align-items:center;gap:12px
+    }
+    .owner-number{flex:1;font-size:16px;font-weight:800}
+    .owner-actions{display:flex;gap:7px}
+    .owner-actions a{
+      color:var(--pine);background:var(--gold-soft);
+      text-decoration:none;font-weight:800;border-radius:10px;
+      padding:9px 10px;font-size:13px
+    }
+    @media(max-width:390px){
+      .brand{font-size:9px;letter-spacing:.08em}
+      .lang-toggle{padding:7px 9px}
+      .owner-row{flex-wrap:wrap}
+      .owner-actions{width:100%}
+      .owner-actions a{flex:1;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand" data-i18n="brand">Ďakujeme za vašu rezerváciu!</div>
+      <div class="lang" id="languagePicker">
+        <button class="lang-toggle" id="langToggle" type="button" onclick="toggleLangMenu(event)" aria-expanded="false">🌐 <span id="currentLang">SK</span> ▼</button>
+        <div class="lang-menu">
+          <button class="lang-option" id="btn-sk" type="button" onclick="setLang('sk',event)"><span class="flag">🇸🇰</span>Slovenčina<span class="check">✓</span></button>
+          <button class="lang-option" id="btn-en" type="button" onclick="setLang('en',event)"><span class="flag">🇬🇧</span>English<span class="check">✓</span></button>
+          <button class="lang-option" id="btn-de" type="button" onclick="setLang('de',event)"><span class="flag">🇩🇪</span>Deutsch<span class="check">✓</span></button>
+          <button class="lang-option" id="btn-uk" type="button" onclick="setLang('uk',event)"><span class="flag">🇺🇦</span>Українська<span class="check">✓</span></button>
+          <button class="lang-option" id="btn-es" type="button" onclick="setLang('es',event)"><span class="flag">🇪🇸</span>Español<span class="check">✓</span></button>
+          <button class="lang-option" id="btn-hu" type="button" onclick="setLang('hu',event)"><span class="flag">🇭🇺</span>Magyar<span class="check">✓</span></button>
+        </div>
+      </div>
+    </div>
+    <h1 data-i18n="title">Vitajte v apartmáne Kamzík 26<br>a Kamzík 64 🏔️</h1>
+    <p class="subtitle" data-i18n="subtitle">Všetky dôležité informácie pre váš pobyt na Donovaloch.</p>
+    <a class="address" href="https://www.google.com/maps/search/?api=1&query=Donovaly+400" target="_blank" rel="noopener">
+      <span>📍</span>
+      <span data-i18n="addressText"><strong>Adresa:</strong> Donovaly 400</span>
+      <span>›</span>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="arrival-card">
+    <div class="times">
+      <div class="time">
+        <div class="t-label">Check-in</div>
+        <div class="t-val">14:00–20:00</div>
+        <div class="t-note" data-i18n="checkinNote">príchod</div>
+      </div>
+      <div class="time">
+        <div class="t-label">Check-out</div>
+        <div class="t-val">do 10:00</div>
+        <div class="t-note" data-i18n="checkoutNote">odchod</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2 data-i18n="arrivalTitle">Príchod a ubytovanie</h2>
+
+    <details class="accordion" open>
+      <summary>
+        <div class="icon">🛎️</div>
+        <div class="summary-main">
+          <span data-i18n="receptionTitle">Nahláste sa na recepcii</span>
+          <small data-i18n="receptionSmall">Čo urobiť hneď po príchode</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body">
+        <p data-i18n="receptionText">Po príchode na apartmán sa nahláste na recepcii svojím menom. Recepčná vám poskytne všetky potrebné inštrukcie a ubytuje vás.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary>
+        <div class="icon">🥐</div>
+        <div class="summary-main">
+          <span data-i18n="breakfastTitle">Raňajky</span>
+          <small data-i18n="breakfastSmall">Objednanie a čas podávania</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body">
+        <p data-i18n="breakfastText">Pri príchode si môžete na recepcii nahlásiť raňajky.</p>
+        <div class="highlight" data-i18n="breakfastTime"><strong>Raňajky denne:</strong> od 8:30 do 10:00</div>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary>
+        <div class="icon">🕗</div>
+        <div class="summary-main">
+          <span data-i18n="specialTimesTitle">Neštandardný príchod alebo odchod</span>
+          <small data-i18n="specialTimesSmall">Príchod po 20:00, skorší príchod a odchod</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body">
+        <p data-i18n="specialTimesIntro">Pri zmene bežného času nás, prosím, informujte vopred, aby sme všetko vybavili s recepciou.</p>
+        <div class="mini-list">
+          <div class="mini-row">
+            <div class="bullet">⏰</div>
+            <p data-i18n="earlyArrival"><strong>Skorší príchod pred 14:00:</strong> ak plánujete prísť napríklad o 11:00, 12:00 alebo 13:00, informujte nás vopred. Oznámime to recepcii, aby bola zmena pripravená a nevznikli pri ubytovaní problémy.</p>
+          </div>
+          <div class="mini-row">
+            <div class="bullet">🌙</div>
+            <p data-i18n="lateArrival"><strong>Príchod po 20:00:</strong> vždy nás vopred kontaktujte. Dohodneme s recepciou uloženie kľúčov do schránky, aby ste sa mohli bez problémov ubytovať aj po zatvorení recepcie.</p>
+          </div>
+          <div class="mini-row">
+            <div class="bullet">🌄</div>
+            <p data-i18n="earlyCheckout"><strong>Odchod pred 8:00:</strong> informujte nás vopred, aby sme zmenu oznámili recepcii a dohodli správny postup pri odchode.</p>
+          </div>
+        </div>
+        <div class="warning" data-i18n="lateCheckout">
+          <strong>Check-out po 10:00:</strong> prosím, informujte nás vopred. Potrebujeme vopred upraviť informácie na recepcii a dohodnúť čas upratovania, aby nevznikli problémy.
+        </div>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary>
+        <div class="icon">📶</div>
+        <div class="summary-main">
+          <span data-i18n="wifiTitle">Wi‑Fi</span>
+          <small data-i18n="wifiSmall">Názov siete a heslo</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body">
+        <p data-i18n="wifiText">Údaje na pripojenie k internetu:</p>
+        <div class="wifi-box">
+          <div class="wifi-row"><small data-i18n="wifiNameLabel">Názov siete</small><strong>donovalský kamzík</strong></div>
+          <div class="wifi-row"><small data-i18n="wifiPasswordLabel">Heslo</small><strong>kamzik400</strong></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2 data-i18n="usefulContactsTitle">Telefónne kontakty v prípade potreby</h2>
+
+    <details class="accordion">
+      <summary>
+        <div class="icon">☎️</div>
+        <div class="summary-main">
+          <span data-i18n="contactsSummaryTitle">Recepcia a reštaurácia</span>
+          <small data-i18n="contactsSummarySmall">Recepcia, reštaurácia a p. Veselovská</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body">
+        <div class="highlight" data-i18n="contactsInfo">
+          Prevádzkujeme a prenajímame iba apartmán. Reštaurácia nie je v našom vlastníctve, preto otázky týkajúce sa reštaurácie smerujte priamo na reštauráciu. Ak vás zaujíma čokoľvek o apartmánovom dome, jeho prevádzke alebo spoločných priestoroch, kontaktujte recepciu.
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-name" data-i18n="restaurantTitle">Reštaurácia</div>
+          <div class="contact-note" data-i18n="restaurantNote">Otázky týkajúce sa reštaurácie</div>
+          <div class="contact-line">
+            <div class="phone">0904 141 331</div>
+            <a href="tel:+421904141331" data-i18n="callShort">Zavolať</a>
+          </div>
+        </div>
+
+        <div class="contact-card" style="margin-bottom:0">
+          <div class="contact-name" data-i18n="receptionContactTitle">Informátor – recepcia</div>
+          <div class="contact-note" data-i18n="receptionNote">Informácie o apartmánovom dome a spoločných priestoroch</div>
+          <div class="contact-line">
+            <div class="phone">0910 927 778</div>
+            <a href="tel:+421910927778" data-i18n="callShort">Zavolať</a>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2 data-i18n="documentsTitle">Faktúra alebo rekreačný poukaz</h2>
+    <details class="accordion">
+      <summary>
+        <div class="icon">🧾</div>
+        <div class="summary-main">
+          <span data-i18n="documentsSummary">Potrebujete doklad?</span>
+          <small data-i18n="documentsSmall">Vyplňte údaje a odošlite ich priamo nám.</small>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+      <div class="accordion-body invoice-body">
+        <p data-i18n="documentsText">Uveďte meno alebo názov firmy, adresu, prípadne IČO, e-mail a poznámku.</p>
+        <form id="invoiceForm" onsubmit="submitInvoice(event)">
+          <div class="form-grid">
+            <div class="field"><label data-i18n="nameLabel">Meno a priezvisko / názov firmy</label><input id="invoiceName" required></div>
+            <div class="field"><label data-i18n="billingAddressLabel">Fakturačná adresa</label><input id="invoiceAddress" required></div>
+            <div class="field"><label data-i18n="companyLabel">IČO (voliteľné)</label><input id="invoiceCompanyId"></div>
+            <div class="field"><label data-i18n="emailLabel">E-mail na zaslanie dokladu</label><input id="invoiceEmail" type="email" required></div>
+            <div class="field"><label data-i18n="noteLabel">Poznámka (voliteľné)</label><textarea id="invoiceNote"></textarea></div>
+          </div>
+          <button class="send-form" id="sendFormBtn" data-i18n="sendForm">Odoslať údaje</button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </details>
+  </section>
+
+  <footer data-i18n="footer">Prajeme vám príjemný pobyt nielen v našom apartmáne, ale aj na Donovaloch. ☺️</footer>
+</main>
+
+<div class="sticky-contact">
+  <button onclick="openContacts()" data-i18n="stickyContact">📞 Potrebujete pomoc? Kontaktujte nás</button>
+</div>
+
+<div class="contact-overlay" id="contactOverlay" onclick="overlayClose(event)">
+  <div class="contact-sheet">
+    <div class="sheet-head">
+      <h2 data-i18n="ownerContactTitle">Kontakt na majiteľa</h2>
+      <button class="sheet-close" onclick="closeContacts()">×</button>
+    </div>
+    <div class="owner-list">
+      <div class="owner-row">
+        <div class="owner-number">0918 290 895</div>
+        <div class="owner-actions"><a href="tel:+421918290895" data-i18n="callShort">Zavolať</a><a href="sms:+421918290895">SMS</a></div>
+      </div>
+      <div class="owner-row">
+        <div class="owner-number">0944 304 984</div>
+        <div class="owner-actions"><a href="tel:+421944304984" data-i18n="callShort">Zavolať</a><a href="sms:+421944304984">SMS</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const I18N = {
+  sk:{
+    receptionSmall:'Čo urobiť hneď po príchode',
+    breakfastSmall:'Objednanie a čas podávania',
+    specialTimesSmall:'Skorší príchod, neskorší príchod a check-out',
+    wifiSmall:'Názov siete a heslo',
+    contactsSummaryTitle:'Recepcia a reštaurácia',
+    contactsSummarySmall:'Kliknite pre čísla a vysvetlenie, koho kontaktovať',
+    brand:'Ďakujeme za vašu rezerváciu!',
+    title:'Vitajte v apartmáne Kamzík 26<br>a Kamzík 64 🏔️',
+    subtitle:'Všetky dôležité informácie pre váš pobyt na Donovaloch.',
+    addressText:'<strong>Adresa:</strong> Donovaly 400',
+    checkinNote:'príchod',checkoutNote:'odchod',
+    arrivalTitle:'Príchod a ubytovanie',
+    receptionTitle:'Nahláste sa na recepcii',
+    receptionText:'Po príchode na apartmán sa nahláste na recepcii svojím menom. Recepčná vám poskytne všetky potrebné inštrukcie a ubytuje vás.',
+    breakfastTitle:'Raňajky',
+    breakfastText:'Pri príchode si môžete na recepcii nahlásiť raňajky.',
+    breakfastTime:'<strong>Raňajky denne:</strong> od 8:30 do 10:00',
+    specialTimesTitle:'Neštandardný príchod alebo odchod',
+    specialTimesIntro:'Pri každej zmene bežného času nás, prosím, informujte vopred. Potrebujeme zmenu oznámiť recepcii a prípadne upratovaciemu personálu, aby bolo všetko pripravené a predišli sme problémom.',
+    lateArrival:'<strong>Príchod po 20:00:</strong> vždy nás vopred kontaktujte. Dohodneme s recepciou uloženie kľúčov do schránky, aby ste sa mohli bez problémov ubytovať aj po zatvorení recepcie.',
+    earlyArrival:'<strong>Skorší príchod pred 14:00:</strong> ak plánujete prísť napríklad o 11:00, 12:00 alebo 13:00, informujte nás vopred. Oznámime to recepcii, aby bola zmena pripravená a nevznikli pri ubytovaní problémy.',
+    earlyCheckout:'<strong>Odchod pred 8:00:</strong> informujte nás vopred, aby sme zmenu oznámili recepcii a dohodli správny postup pri odchode.',
+    lateCheckout:'<strong>Check-out po 10:00:</strong> prosím, informujte nás vopred. Potrebujeme vopred upraviť informácie na recepcii a dohodnúť čas upratovania, aby nevznikli problémy.',
+    wifiTitle:'Wi‑Fi',wifiText:'Údaje na pripojenie k internetu:',wifiNameLabel:'Názov siete',wifiPasswordLabel:'Heslo',
+    usefulContactsTitle:'Telefónne kontakty v prípade potreby',veselovskaTitle:'p. Veselovská',restaurantTitle:'Reštaurácia',restaurantNote:'Otázky týkajúce sa reštaurácie',receptionContactTitle:'Informátor – recepcia',receptionNote:'Informácie o apartmánovom dome a spoločných priestoroch',contactsInfo:'Prevádzkujeme a prenajímame iba apartmán. Reštaurácia nie je v našom vlastníctve, preto otázky týkajúce sa reštaurácie smerujte priamo na reštauráciu. Ak vás zaujíma čokoľvek o apartmánovom dome, jeho prevádzke alebo spoločných priestoroch, kontaktujte recepciu.',
+    callShort:'Zavolať',
+    documentsTitle:'Faktúra alebo rekreačný poukaz',documentsSummary:'Potrebujete doklad?',documentsSmall:'Vyplňte údaje a odošlite ich priamo nám.',
+    documentsText:'Uveďte meno alebo názov firmy, adresu, prípadne IČO, e-mail a poznámku.',
+    nameLabel:'Meno a priezvisko / názov firmy',billingAddressLabel:'Fakturačná adresa',companyLabel:'IČO (voliteľné)',emailLabel:'E-mail na zaslanie dokladu',noteLabel:'Poznámka (voliteľné)',
+    sendForm:'Odoslať údaje',sending:'Odosielam…',sent:'Údaje boli úspešne odoslané. Ďakujeme ✓',sendError:'Odoslanie sa nepodarilo. Otvoríme pripravený e-mail.',
+    stickyContact:'📞 Potrebujete pomoc? Kontaktujte nás',ownerContactTitle:'Kontakt na majiteľa',
+    footer:'Prajeme vám príjemný pobyt nielen v našom apartmáne, ale aj na Donovaloch. ☺️'
+  },
+  en:{
+    receptionSmall:'What to do immediately after arrival',
+    breakfastSmall:'Ordering and serving times',
+    specialTimesSmall:'Early arrival, late arrival and check-out',
+    wifiSmall:'Network name and password',
+    contactsSummaryTitle:'Reception and restaurant',
+    contactsSummarySmall:'Tap for phone numbers and who to contact',
+    brand:'Thank you for your reservation!',
+    title:'Welcome to Apartment Kamzík 26<br>and Kamzík 64 🏔️',
+    subtitle:'All important information for your stay in Donovaly.',
+    addressText:'<strong>Address:</strong> Donovaly 400',
+    checkinNote:'arrival',checkoutNote:'departure',
+    arrivalTitle:'Arrival and accommodation',
+    receptionTitle:'Check in at reception',
+    receptionText:'Upon arrival, please report to reception under your name. The receptionist will give you all necessary instructions and check you in.',
+    breakfastTitle:'Breakfast',
+    breakfastText:'You may arrange breakfast at reception when you arrive.',
+    breakfastTime:'<strong>Breakfast daily:</strong> 8:30 AM–10:00 AM',
+    specialTimesTitle:'Arrival or departure outside standard hours',
+    specialTimesIntro:'Please inform us in advance about any change to the standard times. We need to notify reception and, when necessary, the cleaning staff so everything is prepared and problems are avoided.',
+    lateArrival:'<strong>Arrival after 8:00 PM:</strong> always contact us in advance. We will arrange with reception for the keys to be placed in a lockbox so you can check in without problems after reception closes.',
+    earlyArrival:'<strong>Arrival before 2:00 PM:</strong> if you plan to arrive at around 11:00 AM, 12:00 PM or 1:00 PM, inform us in advance. We will notify reception so the change is prepared and there are no problems at check-in.',
+    earlyCheckout:'<strong>Departure before 8:00 AM:</strong> inform us in advance so we can notify reception and arrange the correct departure procedure.',
+    lateCheckout:'<strong>Check-out after 10:00 AM:</strong> please inform us in advance. We need to update the information at reception and arrange the cleaning time in advance to avoid problems.',
+    wifiTitle:'Wi‑Fi',wifiText:'Internet connection details:',wifiNameLabel:'Network name',wifiPasswordLabel:'Password',
+    usefulContactsTitle:'Telephone contacts if needed',veselovskaTitle:'Ms Veselovská',restaurantTitle:'Restaurant',restaurantNote:'Questions concerning the restaurant',receptionContactTitle:'Information desk – reception',receptionNote:'Information about the apartment building and common areas',contactsInfo:'We only operate and rent the apartment. We do not own the restaurant, so please direct all restaurant-related questions to the restaurant. For questions about the apartment building, its operation or common areas, please contact reception.',
+    callShort:'Call',
+    documentsTitle:'Invoice or recreation voucher',documentsSummary:'Do you need a document?',documentsSmall:'Enter the details and send them directly to us.',
+    documentsText:'Enter your name or company, billing address, company ID if applicable, e-mail and note.',
+    nameLabel:'Full name / company',billingAddressLabel:'Billing address',companyLabel:'Company ID (optional)',emailLabel:'E-mail for the document',noteLabel:'Note (optional)',
+    sendForm:'Send details',sending:'Sending…',sent:'Details sent successfully. Thank you ✓',sendError:'Sending failed. We will open a prepared e-mail.',
+    stickyContact:'📞 Need help? Contact us',ownerContactTitle:'Owner contact',
+    footer:'We wish you a pleasant stay in our apartment and in Donovaly. ☺️'
+  },
+  de:{
+    receptionSmall:'Was Sie direkt nach der Ankunft tun müssen',
+    breakfastSmall:'Bestellung und Frühstückszeiten',
+    specialTimesSmall:'Frühe Anreise, späte Anreise und Check-out',
+    wifiSmall:'Netzwerkname und Passwort',
+    contactsSummaryTitle:'Rezeption und Restaurant',
+    contactsSummarySmall:'Tippen Sie für Telefonnummern und Zuständigkeiten',
+    brand:'Vielen Dank für Ihre Reservierung!',
+    title:'Willkommen im Apartment Kamzík 26<br>und Kamzík 64 🏔️',
+    subtitle:'Alle wichtigen Informationen für Ihren Aufenthalt in Donovaly.',
+    addressText:'<strong>Adresse:</strong> Donovaly 400',
+    checkinNote:'Anreise',checkoutNote:'Abreise',
+    arrivalTitle:'Anreise und Unterkunft',
+    receptionTitle:'An der Rezeption anmelden',
+    receptionText:'Melden Sie sich bei Ihrer Ankunft unter Ihrem Namen an der Rezeption. Die Rezeptionistin gibt Ihnen alle notwendigen Informationen und checkt Sie ein.',
+    breakfastTitle:'Frühstück',
+    breakfastText:'Bei Ihrer Ankunft können Sie das Frühstück an der Rezeption anmelden.',
+    breakfastTime:'<strong>Frühstück täglich:</strong> 8:30–10:00 Uhr',
+    specialTimesTitle:'An- oder Abreise außerhalb der Standardzeiten',
+    specialTimesIntro:'Bitte informieren Sie uns über jede Änderung der normalen Zeiten im Voraus. Wir müssen die Rezeption und gegebenenfalls das Reinigungspersonal benachrichtigen, damit alles vorbereitet ist und keine Probleme entstehen.',
+    lateArrival:'<strong>Anreise nach 20:00 Uhr:</strong> Kontaktieren Sie uns immer im Voraus. Wir vereinbaren mit der Rezeption, dass die Schlüssel in einer Schlüsselbox hinterlegt werden, damit Sie sich auch nach Schließung der Rezeption problemlos einchecken können.',
+    earlyArrival:'<strong>Anreise vor 14:00 Uhr:</strong> Wenn Sie z. B. um 11:00, 12:00 oder 13:00 Uhr anreisen möchten, informieren Sie uns im Voraus. Wir benachrichtigen die Rezeption, damit die Änderung vorbereitet ist und es beim Check-in keine Probleme gibt.',
+    earlyCheckout:'<strong>Abreise vor 8:00 Uhr:</strong> Informieren Sie uns im Voraus, damit wir die Rezeption benachrichtigen und den richtigen Ablauf für die Abreise vereinbaren können.',
+    lateCheckout:'<strong>Check-out nach 10:00 Uhr:</strong> Bitte informieren Sie uns im Voraus. Wir müssen die Informationen an der Rezeption rechtzeitig anpassen und die Reinigungszeit vereinbaren, damit keine Probleme entstehen.',
+    wifiTitle:'WLAN',wifiText:'Internetzugang:',wifiNameLabel:'Netzwerkname',wifiPasswordLabel:'Passwort',
+    usefulContactsTitle:'Telefonkontakte bei Bedarf',veselovskaTitle:'Frau Veselovská',restaurantTitle:'Restaurant',restaurantNote:'Fragen zum Restaurant',receptionContactTitle:'Information – Rezeption',receptionNote:'Informationen zum Apartmenthaus und zu den Gemeinschaftsbereichen',contactsInfo:'Wir betreiben und vermieten nur das Apartment. Das Restaurant gehört uns nicht. Bitte richten Sie Fragen zum Restaurant direkt an das Restaurant. Bei Fragen zum Apartmenthaus, zum Betrieb oder zu den Gemeinschaftsbereichen wenden Sie sich bitte an die Rezeption.',
+    callShort:'Anrufen',
+    documentsTitle:'Rechnung oder Gutschein',documentsSummary:'Benötigen Sie einen Beleg?',documentsSmall:'Daten ausfüllen und direkt senden.',
+    documentsText:'Geben Sie Name, Adresse, ggf. Unternehmens-ID, E-Mail und Notiz an.',
+    nameLabel:'Name / Firma',billingAddressLabel:'Rechnungsadresse',companyLabel:'Unternehmens-ID (optional)',emailLabel:'E-Mail',noteLabel:'Notiz (optional)',
+    sendForm:'Daten senden',sending:'Wird gesendet…',sent:'Erfolgreich gesendet ✓',sendError:'Senden fehlgeschlagen. Eine E-Mail wird geöffnet.',
+    stickyContact:'📞 Brauchen Sie Hilfe? Kontaktieren Sie uns',ownerContactTitle:'Kontakt zum Eigentümer',
+    footer:'Wir wünschen Ihnen einen angenehmen Aufenthalt in unserem Apartment und in Donovaly. ☺️'
+  },
+  uk:{
+    receptionSmall:'Що зробити одразу після прибуття',
+    breakfastSmall:'Замовлення та час подачі',
+    specialTimesSmall:'Раннє прибуття, пізнє прибуття та виїзд',
+    wifiSmall:'Назва мережі та пароль',
+    contactsSummaryTitle:'Рецепція та ресторан',
+    contactsSummarySmall:'Натисніть, щоб переглянути номери та пояснення',
+    brand:'Дякуємо за ваше бронювання!',
+    title:'Ласкаво просимо до апартаментів Kamzík 26<br>та Kamzík 64 🏔️',
+    subtitle:'Уся важлива інформація для вашого перебування в Доновалах.',
+    addressText:'<strong>Адреса:</strong> Donovaly 400',
+    checkinNote:'прибуття',checkoutNote:'виїзд',
+    arrivalTitle:'Прибуття та поселення',
+    receptionTitle:'Зареєструйтеся на рецепції',
+    receptionText:'Після прибуття зверніться на рецепцію та назвіть своє ім’я. Працівниця рецепції надасть усі необхідні інструкції та поселить вас.',
+    breakfastTitle:'Сніданок',
+    breakfastText:'Після прибуття ви можете замовити сніданок на рецепції.',
+    breakfastTime:'<strong>Сніданок щодня:</strong> з 8:30 до 10:00',
+    specialTimesTitle:'Нестандартний час прибуття або виїзду',
+    specialTimesIntro:'Про будь-яку зміну стандартного часу повідомляйте нас заздалегідь. Нам потрібно попередити рецепцію та, за потреби, персонал прибирання, щоб усе було підготовлено й не виникло проблем.',
+    lateArrival:'<strong>Прибуття після 20:00:</strong> обов’язково зв’яжіться з нами заздалегідь. Ми домовимося з рецепцією, щоб ключі залишили у сейфі, і ви могли без проблем заселитися після закриття рецепції.',
+    earlyArrival:'<strong>Прибуття до 14:00:</strong> якщо плануєте прибути об 11:00, 12:00 або 13:00, повідомте нас заздалегідь. Ми попередимо рецепцію, щоб зміна була підготовлена і не виникло проблем під час заселення.',
+    earlyCheckout:'<strong>Виїзд до 8:00:</strong> повідомте нас заздалегідь, щоб ми попередили рецепцію та погодили правильний порядок виїзду.',
+    lateCheckout:'<strong>Виїзд після 10:00:</strong> будь ласка, повідомте нас заздалегідь. Нам потрібно завчасно змінити інформацію на рецепції та домовитися про час прибирання, щоб уникнути проблем.',
+    wifiTitle:'Wi‑Fi',wifiText:'Дані для підключення до інтернету:',wifiNameLabel:'Назва мережі',wifiPasswordLabel:'Пароль',
+    usefulContactsTitle:'Телефонні контакти за потреби',veselovskaTitle:'пані Веселовська',restaurantTitle:'Ресторан',restaurantNote:'Питання, що стосуються ресторану',receptionContactTitle:'Інформатор – рецепція',receptionNote:'Інформація про апартаментний будинок і спільні приміщення',contactsInfo:'Ми управляємо та здаємо в оренду лише апартамент. Ресторан нам не належить, тому всі питання щодо ресторану адресуйте безпосередньо ресторану. Якщо вас цікавить апартаментний будинок, його робота або спільні приміщення, звертайтеся на рецепцію.',
+    callShort:'Подзвонити',
+    documentsTitle:'Рахунок або ваучер',documentsSummary:'Потрібен документ?',documentsSmall:'Заповніть і надішліть дані.',
+    documentsText:'Вкажіть ім’я, адресу, номер компанії, e-mail і примітку.',
+    nameLabel:'Ім’я / компанія',billingAddressLabel:'Адреса',companyLabel:'Номер компанії',emailLabel:'E-mail',noteLabel:'Примітка',
+    sendForm:'Надіслати',sending:'Надсилання…',sent:'Успішно надіслано ✓',sendError:'Не вдалося. Відкриємо e-mail.',
+    stickyContact:'📞 Потрібна допомога?',ownerContactTitle:'Контакт власника',
+    footer:'Бажаємо приємного відпочинку в нашому апартаменті та на Доновалах. ☺️'
+  },
+  es:{
+    receptionSmall:'Qué hacer justo después de llegar',
+    breakfastSmall:'Reserva y horario del desayuno',
+    specialTimesSmall:'Llegada temprana, llegada tardía y salida',
+    wifiSmall:'Nombre de la red y contraseña',
+    contactsSummaryTitle:'Recepción y restaurante',
+    contactsSummarySmall:'Pulse para ver los números y a quién contactar',
+    brand:'¡Gracias por su reserva!',
+    title:'Bienvenido al apartamento Kamzík 26<br>y Kamzík 64 🏔️',
+    subtitle:'Toda la información importante para su estancia en Donovaly.',
+    addressText:'<strong>Dirección:</strong> Donovaly 400',
+    checkinNote:'llegada',checkoutNote:'salida',
+    arrivalTitle:'Llegada y alojamiento',
+    receptionTitle:'Regístrese en recepción',
+    receptionText:'Al llegar, preséntese en recepción con su nombre. La recepcionista le dará las instrucciones necesarias y realizará el registro.',
+    breakfastTitle:'Desayuno',
+    breakfastText:'Al llegar puede solicitar el desayuno en recepción.',
+    breakfastTime:'<strong>Desayuno diario:</strong> de 8:30 a 10:00',
+    specialTimesTitle:'Llegada o salida fuera del horario habitual',
+    specialTimesIntro:'Infórmenos con antelación de cualquier cambio en los horarios habituales. Debemos avisar a recepción y, cuando sea necesario, al personal de limpieza para que todo esté preparado y evitar problemas.',
+    lateArrival:'<strong>Llegada después de las 20:00:</strong> contáctenos siempre con antelación. Coordinaremos con recepción para dejar las llaves en una caja, de modo que pueda registrarse sin problemas después del cierre.',
+    earlyArrival:'<strong>Llegada antes de las 14:00:</strong> si piensa llegar a las 11:00, 12:00 o 13:00, infórmenos con antelación. Avisaremos a recepción para que el cambio esté preparado y no haya problemas durante el registro.',
+    earlyCheckout:'<strong>Salida antes de las 8:00:</strong> infórmenos con antelación para que podamos avisar a recepción y acordar el procedimiento correcto de salida.',
+    lateCheckout:'<strong>Salida después de las 10:00:</strong> infórmenos con antelación. Necesitamos actualizar previamente la información en recepción y acordar el horario de limpieza para evitar problemas.',
+    wifiTitle:'Wi‑Fi',wifiText:'Datos de conexión:',wifiNameLabel:'Nombre de la red',wifiPasswordLabel:'Contraseña',
+    usefulContactsTitle:'Contactos telefónicos en caso de necesidad',veselovskaTitle:'Sra. Veselovská',restaurantTitle:'Restaurante',restaurantNote:'Preguntas relacionadas con el restaurante',receptionContactTitle:'Información – recepción',receptionNote:'Información sobre el edificio y las zonas comunes',contactsInfo:'Solo gestionamos y alquilamos el apartamento. El restaurante no es de nuestra propiedad, por lo que las preguntas sobre el restaurante deben dirigirse directamente al restaurante. Para cualquier consulta sobre el edificio, su funcionamiento o las zonas comunes, contacte con recepción.',
+    callShort:'Llamar',
+    documentsTitle:'Factura o justificante',documentsSummary:'¿Necesita un documento?',documentsSmall:'Complete y envíe los datos.',
+    documentsText:'Indique nombre, dirección, identificación, e-mail y nota.',
+    nameLabel:'Nombre / empresa',billingAddressLabel:'Dirección',companyLabel:'Identificación',emailLabel:'E-mail',noteLabel:'Nota',
+    sendForm:'Enviar',sending:'Enviando…',sent:'Enviado correctamente ✓',sendError:'Error. Abriremos un e-mail.',
+    stickyContact:'📞 ¿Necesita ayuda?',ownerContactTitle:'Contacto del propietario',
+    footer:'Le deseamos una agradable estancia en nuestro apartamento y en Donovaly. ☺️'
+  },
+  hu:{
+    receptionSmall:'Teendők közvetlenül érkezés után',
+    breakfastSmall:'Rendelés és felszolgálási idő',
+    specialTimesSmall:'Korai érkezés, késői érkezés és kijelentkezés',
+    wifiSmall:'Hálózat neve és jelszó',
+    contactsSummaryTitle:'Recepció és étterem',
+    contactsSummarySmall:'Kattintson a telefonszámokért és a tájékoztatóért',
+    brand:'Köszönjük a foglalását!',
+    title:'Üdvözöljük a Kamzík 26<br>és Kamzík 64 apartmanokban 🏔️',
+    subtitle:'Minden fontos információ a donovalyi tartózkodáshoz.',
+    addressText:'<strong>Cím:</strong> Donovaly 400',
+    checkinNote:'érkezés',checkoutNote:'távozás',
+    arrivalTitle:'Érkezés és bejelentkezés',
+    receptionTitle:'Jelentkezzen be a recepción',
+    receptionText:'Érkezéskor jelentkezzen be a recepción a saját nevével. A recepciós megad minden szükséges információt és elvégzi a bejelentkezést.',
+    breakfastTitle:'Reggeli',
+    breakfastText:'Érkezéskor a recepción kérhet reggelit.',
+    breakfastTime:'<strong>Reggeli mindennap:</strong> 8:30–10:00',
+    specialTimesTitle:'Érkezés vagy távozás a szokásos időn kívül',
+    specialTimesIntro:'Kérjük, a szokásos időpontok bármilyen változásáról előre értesítsen minket. Tájékoztatnunk kell a recepciót és szükség esetén a takarító személyzetet, hogy minden elő legyen készítve és elkerüljük a problémákat.',
+    lateArrival:'<strong>Érkezés 20:00 után:</strong> mindig lépjen velünk kapcsolatba előre. Egyeztetjük a recepcióval, hogy a kulcsokat a széfbe tegyék, így a recepció zárása után is gond nélkül be tud jelentkezni.',
+    earlyArrival:'<strong>Érkezés 14:00 előtt:</strong> ha 11:00, 12:00 vagy 13:00 körül érkezne, előre értesítsen minket. Mi tájékoztatjuk a recepciót, hogy a változásra felkészüljenek, és ne legyen probléma a bejelentkezéskor.',
+    earlyCheckout:'<strong>Távozás 8:00 előtt:</strong> előre értesítsen minket, hogy tájékoztathassuk a recepciót és egyeztethessük a helyes távozási eljárást.',
+    lateCheckout:'<strong>Távozás 10:00 után:</strong> kérjük, előre értesítsen minket. Előre módosítanunk kell a recepción lévő információkat és egyeztetnünk kell a takarítás időpontját, hogy elkerüljük a problémákat.',
+    wifiTitle:'Wi‑Fi',wifiText:'Internet-hozzáférési adatok:',wifiNameLabel:'Hálózat neve',wifiPasswordLabel:'Jelszó',
+    usefulContactsTitle:'Telefonos elérhetőségek szükség esetén',veselovskaTitle:'Veselovská asszony',restaurantTitle:'Étterem',restaurantNote:'Az étteremmel kapcsolatos kérdések',receptionContactTitle:'Információ – recepció',receptionNote:'Információ az apartmanházról és a közös helyiségekről',contactsInfo:'Mi kizárólag az apartmant üzemeltetjük és adjuk bérbe. Az étterem nem a mi tulajdonunk, ezért az étteremmel kapcsolatos kérdéseket közvetlenül az étteremhez intézze. Az apartmanházzal, annak működésével vagy a közös helyiségekkel kapcsolatos kérdésekben forduljon a recepcióhoz.',
+    callShort:'Hívás',
+    documentsTitle:'Számla vagy utalvány',documentsSummary:'Szüksége van dokumentumra?',documentsSmall:'Töltse ki és küldje el az adatokat.',
+    documentsText:'Adja meg a nevet, címet, cégazonosítót, e-mailt és megjegyzést.',
+    nameLabel:'Név / cég',billingAddressLabel:'Cím',companyLabel:'Cégazonosító',emailLabel:'E-mail',noteLabel:'Megjegyzés',
+    sendForm:'Küldés',sending:'Küldés…',sent:'Sikeresen elküldve ✓',sendError:'Nem sikerült. Megnyitunk egy e-mailt.',
+    stickyContact:'📞 Segítségre van szüksége?',ownerContactTitle:'Tulajdonosi kapcsolat',
+    footer:'Kellemes időtöltést kívánunk apartmanunkban és Donovalyban. ☺️'
+  }
+};
+
+const supported=['sk','en','de','uk','es','hu'];
+let lang=localStorage.getItem('kamzik26-language')||((navigator.language||'en').toLowerCase().startsWith('sk')?'sk':'en');
+if(!supported.includes(lang))lang='en';
+
+function toggleLangMenu(event){
+  if(event)event.stopPropagation();
+  const picker=document.getElementById('languagePicker');
+  const open=picker.classList.toggle('open');
+  document.getElementById('langToggle').setAttribute('aria-expanded',String(open));
+}
+function closeLangMenu(){
+  document.getElementById('languagePicker').classList.remove('open');
+  document.getElementById('langToggle').setAttribute('aria-expanded','false');
+}
+function setLang(l,event){
+  if(event)event.stopPropagation();
+  if(!supported.includes(l))return;
+  lang=l;
+  localStorage.setItem('kamzik26-language',l);
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(I18N[l][k]!=null)el.innerHTML=I18N[l][k];
+  });
+  supported.forEach(c=>document.getElementById('btn-'+c).classList.toggle('on',c===l));
+  document.getElementById('currentLang').textContent=({sk:'SK',en:'EN',de:'DE',uk:'UA',es:'ES',hu:'HU'})[l];
+  closeLangMenu();
+}
+document.addEventListener('click',e=>{
+  if(!document.getElementById('languagePicker').contains(e.target))closeLangMenu();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeLangMenu();closeContacts();}
+});
+
+function openContacts(){
+  document.getElementById('contactOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeContacts(){
+  document.getElementById('contactOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function overlayClose(e){
+  if(e.target.id==='contactOverlay')closeContacts();
+}
+
+async function submitInvoice(e){
+  e.preventDefault();
+  const btn=document.getElementById('sendFormBtn');
+  const status=document.getElementById('formStatus');
+  btn.disabled=true;
+  btn.textContent=I18N[lang].sending;
+  const data={
+    _subject:'Faktúra / rekreačný poukaz – Apartmán Kamzík 26 a Kamzík 64, Donovaly',
+    _template:'table',
+    _captcha:'false',
+    'Meno alebo firma':document.getElementById('invoiceName').value,
+    'Adresa':document.getElementById('invoiceAddress').value,
+    'IČO':document.getElementById('invoiceCompanyId').value||'—',
+    'E-mail hosťa':document.getElementById('invoiceEmail').value,
+    'Poznámka':document.getElementById('invoiceNote').value||'—'
+  };
+  try{
+    const r=await fetch('https://formsubmit.co/ajax/povraznikovav@gmail.com',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(!r.ok)throw new Error();
+    status.className='form-status success';
+    status.textContent=I18N[lang].sent;
+    e.target.reset();
+  }catch(err){
+    status.className='form-status error';
+    status.textContent=I18N[lang].sendError;
+    location.href='mailto:povraznikovav@gmail.com?subject='+encodeURIComponent(data._subject)+'&body='+encodeURIComponent(JSON.stringify(data,null,2));
+  }finally{
+    btn.disabled=false;
+    btn.textContent=I18N[lang].sendForm;
+  }
+}
+
+setLang(lang);
+
+document.querySelectorAll('section').forEach(section=>{
+  const items=[...section.querySelectorAll(':scope > .accordion')];
+  items.forEach(item=>{
+    item.addEventListener('toggle',()=>{
+      if(item.open){
+        items.forEach(other=>{
+          if(other!==item)other.removeAttribute('open');
+        });
+      }
+    });
+  });
+});
+
+</script>
+</body>
+</html>
