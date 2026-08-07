@@ -795,6 +795,8 @@ function overlayClose(e){
 
 const INVOICE_OWNER_FORM_ENDPOINT='https://script.google.com/macros/s/AKfycbx1EIrJjeiMjZD-dkuqCw_-Yi-W4ImuDZICIHC1q4Jyy44P0m7Yy--OppjfiK66AQoX/exec';
 const INVOICE_SOURCE_SITE='apartman-kamzik26-a-64.github.io';
+const INVOICE_OWNER_EMAIL='povraznikovav@gmail.com';
+function buildInvoiceOwnerLink(requestId){const target=INVOICE_OWNER_FORM_ENDPOINT+'?request_id='+encodeURIComponent(requestId)+'&source_site='+encodeURIComponent(INVOICE_SOURCE_SITE);return 'https://accounts.google.com/AccountChooser?Email='+encodeURIComponent(INVOICE_OWNER_EMAIL)+'&continue='+encodeURIComponent(target)}
 
 function invoiceOwnerEndpointConfigured(){
   return /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(INVOICE_OWNER_FORM_ENDPOINT);
@@ -840,7 +842,7 @@ async function submitInvoice(e){
     status.textContent='Bezpečné odoslanie nie je v tomto prehliadači dostupné. Skúste novší prehliadač.';
     return;
   }
-  const ownerLink=INVOICE_OWNER_FORM_ENDPOINT+'?request_id='+encodeURIComponent(requestId)+'&source_site='+encodeURIComponent(INVOICE_SOURCE_SITE);
+  const ownerLink=buildInvoiceOwnerLink(requestId);
   document.getElementById('invoiceRequestId').value=requestId;
   document.getElementById('invoiceEmailConfirmedValue').value=String(document.getElementById('invoiceEmailConfirmed').checked);
   document.getElementById('invoiceConsentValue').value=String(document.getElementById('invoiceConsent').checked);
