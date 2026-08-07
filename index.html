@@ -503,7 +503,7 @@
             <input type="hidden" id="invoiceSourceSite" name="source_site" value="apartman-kamzik26-a-64.github.io">
             <input type="hidden" id="invoiceEmailConfirmedValue" name="email_confirmed">
             <input type="hidden" id="invoiceConsentValue" name="electronic_delivery_consent">
-            <input type="hidden" id="invoiceOwnerLink" name="Doplniť pobyt a cenu">
+            <input type="hidden" id="invoiceOwnerNextStep" name="Ďalší krok" value="Bezpečný odkaz na doplnenie pobytu a ceny príde samostatným e-mailom do schránky majiteľa do jednej minúty.">
           </div>
           <button class="send-form" id="sendFormBtn" data-i18n="sendForm">Odoslať údaje</button>
           <div class="form-status" id="formStatus"></div>
@@ -793,14 +793,8 @@ function overlayClose(e){
   if(e.target.id==='contactOverlay')closeContacts();
 }
 
-const INVOICE_OWNER_FORM_ENDPOINT='https://script.google.com/macros/s/AKfycbx1EIrJjeiMjZD-dkuqCw_-Yi-W4ImuDZICIHC1q4Jyy44P0m7Yy--OppjfiK66AQoX/exec';
 const INVOICE_SOURCE_SITE='apartman-kamzik26-a-64.github.io';
-const INVOICE_OWNER_EMAIL='povraznikovav@gmail.com';
-function buildInvoiceOwnerLink(requestId){const target=INVOICE_OWNER_FORM_ENDPOINT+'?request_id='+encodeURIComponent(requestId)+'&source_site='+encodeURIComponent(INVOICE_SOURCE_SITE);return 'https://accounts.google.com/AccountChooser?Email='+encodeURIComponent(INVOICE_OWNER_EMAIL)+'&continue='+encodeURIComponent(target)}
-
-function invoiceOwnerEndpointConfigured(){
-  return /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(INVOICE_OWNER_FORM_ENDPOINT);
-}
+const INVOICE_OWNER_NEXT_STEP='Bezpečný odkaz na doplnenie pobytu a ceny príde samostatným e-mailom do schránky majiteľa do jednej minúty.';
 
 function createInvoiceRequestId(){
   if(!globalThis.crypto||typeof crypto.getRandomValues!=='function')throw new Error('crypto-unavailable');
@@ -826,11 +820,6 @@ async function submitInvoice(e){
   e.preventDefault();
   const btn=document.getElementById('sendFormBtn');
   const status=document.getElementById('formStatus');
-  if(!invoiceOwnerEndpointConfigured()){
-    status.className='form-status error';
-    status.textContent='Odoslanie fakturačných údajov je dočasne nedostupné. Kontaktujte nás, prosím.';
-    return;
-  }
   if(!document.getElementById('invoiceEmailConfirmed').checked||!document.getElementById('invoiceConsent').checked){
     status.className='form-status error';
     status.textContent='Potvrďte správnosť e-mailu aj elektronické doručenie faktúry.';
@@ -842,11 +831,9 @@ async function submitInvoice(e){
     status.textContent='Bezpečné odoslanie nie je v tomto prehliadači dostupné. Skúste novší prehliadač.';
     return;
   }
-  const ownerLink=buildInvoiceOwnerLink(requestId);
   document.getElementById('invoiceRequestId').value=requestId;
   document.getElementById('invoiceEmailConfirmedValue').value=String(document.getElementById('invoiceEmailConfirmed').checked);
   document.getElementById('invoiceConsentValue').value=String(document.getElementById('invoiceConsent').checked);
-  document.getElementById('invoiceOwnerLink').value=ownerLink;
   btn.disabled=true;
   btn.textContent=I18N[lang].sending;
   const data={
@@ -865,7 +852,7 @@ async function submitInvoice(e){
     'E-mail hosťa':document.getElementById('invoiceEmail').value,
     email_confirmed:String(document.getElementById('invoiceEmailConfirmed').checked),
     electronic_delivery_consent:String(document.getElementById('invoiceConsent').checked),
-    'Doplniť pobyt a cenu':ownerLink,
+    'Ďalší krok':INVOICE_OWNER_NEXT_STEP,
     'Poznámka':document.getElementById('invoiceNote').value||'—'
   };
   try{
@@ -874,7 +861,8 @@ async function submitInvoice(e){
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify(data)
     });
-    if(!r.ok)throw new Error();
+    const response=await r.json().catch(()=>null);
+    if(!r.ok||!response||(response.success!==true&&response.success!=='true'))throw new Error();
     status.className='form-status success';
     status.textContent=I18N[lang].sent;
     e.target.reset();
